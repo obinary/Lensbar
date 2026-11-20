@@ -58,3 +58,16 @@ jobs:
           git rm -q upload/Lensbar-Setup.exe
           git commit -q -m "Published $TAG (installer moved to the release)"
           git push
+      - name: Put the Mac download on the latest release too
+        # so the main release page offers both downloads, and .../releases/latest/download/Lensbar.dmg always works
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          LATEST=$(gh release view --json tagName -q .tagName 2>/dev/null || true)
+          MAC=$(gh release list --limit 50 --json tagName -q '[.[] | select(.tagName | startswith("mac-v"))][0].tagName' 2>/dev/null || true)
+          if [ -z "$MAC" ] || [ -z "$LATEST" ] || [ "$MAC" = "$LATEST" ]; then echo "Nothing to copy."; exit 0; fi
+          mkdir -p /tmp/mac
+          gh release download "$MAC" -p Lensbar.dmg -D /tmp/mac --clobber
+          gh release upload "$LATEST" /tmp/mac/Lensbar.dmg --clobber
+          echo "Copied Lensbar.dmg from $MAC to $LATEST"

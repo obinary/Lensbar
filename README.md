@@ -8,7 +8,7 @@ Press **Ctrl+Alt+R** (Windows) or **⌃⌥R** (Mac) and the capture bar slides o
 
 **[⬇ Download for Windows](https://github.com/obinary/lensbar/releases/latest/download/Lensbar-Setup.exe)** (Windows 10 and 11)
 
-**[⬇ Download for Mac](https://github.com/obinary/lensbar/releases/download/mac-v1.0.0/Lensbar.dmg)** (macOS 14 Sonoma or later; Apple silicon and Intel)
+**[⬇ Download for Mac](https://github.com/obinary/lensbar/releases/latest/download/Lensbar.dmg)** (macOS 14 Sonoma or later; Apple silicon and Intel)
 
 Or browse all versions on the [Releases](https://github.com/obinary/lensbar/releases) page.
 
