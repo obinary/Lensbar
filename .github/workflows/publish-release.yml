@@ -1,0 +1,37 @@
+# Publishes a Lensbar release whenever a new installer is uploaded to upload/.
+# Upload:  upload/Lensbar-Setup.exe  +  upload/version.txt (e.g. 1.0.1)  [+ upload/notes.md]
+# The release is tagged app-v<version>; installed copies of Lensbar find it and update themselves.
+name: Publish release
+on:
+  push:
+    branches: [main]
+    paths: ['upload/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: publish-release
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish the uploaded installer as a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [ ! -f upload/Lensbar-Setup.exe ]; then echo "Nothing to publish."; exit 0; fi
+          VER=$(tr -d '[:space:]' < upload/version.txt)
+          TAG="app-v$VER"
+          if [ -f upload/notes.md ]; then NOTES=$(cat upload/notes.md); else NOTES="Lensbar $VER"; fi
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "$TAG already exists - replacing its installer"
+            gh release upload "$TAG" upload/Lensbar-Setup.exe --clobber
+          else
+            gh release create "$TAG" upload/Lensbar-Setup.exe --title "Lensbar $VER" --notes "$NOTES" --latest
+          fi
+          # the installer now lives on the release; take it out of the repository
+          git rm -q upload/Lensbar-Setup.exe
+          git -c user.name="github-actions[bot]" -c user.email="41898283+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Published $TAG (installer moved to the release)"
+          git push
