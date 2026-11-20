@@ -10,7 +10,7 @@ Press **Ctrl+Alt+R** (Windows) or **⌃⌥R** (Mac) and the capture bar slides o
 
 **[⬇ Download for Mac](https://github.com/obinary/lensbar/releases/latest/download/Lensbar.dmg)** (macOS 14 Sonoma or later; Apple silicon and Intel)
 
-Or browse all versions on the [Releases](https://github.com/obinary/lensbar/releases) page.
+Older versions are on the [Releases](https://github.com/obinary/lensbar/releases) page.
 
 **Windows:** run `Lensbar-Setup.exe` and follow the steps. To remove Lensbar later, use **Windows Settings → Apps**.
 
