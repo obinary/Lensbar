@@ -27,7 +27,7 @@ The Mac shortcut is **⌃⌥R** (Control + Option + R), and Lensbar lives in the
 - **Small while recording:** the controls shrink into a small notch at the screen edge that shows the timer. Hover over it to pause, stop or discard.
 - **Pin:** pin the bar to keep it handy. It tucks into a small tab on the edge and opens again when you hover over it.
 - **Pick an edge:** place the bar on the top, left or right edge of your screen.
-- **Where files go:** videos are saved as MP4 in `Videos\Lensbar`, and screenshots as PNG in `Pictures\Lensbar`.
+- **Where files go:** videos are saved as MP4 in `Videos\Lensbar` (Mac: `Movies/Lensbar`), and screenshots as PNG in `Pictures\Lensbar`.
 
 ## Updates
 
