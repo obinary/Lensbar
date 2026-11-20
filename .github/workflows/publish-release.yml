@@ -83,3 +83,21 @@ jobs:
           gh release download "$MAC" -p Lensbar.dmg -D /tmp/mac --clobber
           gh release upload "$LATEST" /tmp/mac/Lensbar.dmg --clobber
           echo "Copied Lensbar.dmg from $MAC to $LATEST"
+      - name: Update latest.json (what the apps check for updates)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git pull -q --rebase origin main || true
+          WIN=$(gh release list --limit 50 --json tagName -q '[.[] | select(.tagName | test("^(app-)?v[0-9]"))][0].tagName')
+          MAC=$(gh release list --limit 50 --json tagName -q '[.[] | select(.tagName | startswith("mac-v"))][0].tagName')
+          WV=$(echo "$WIN" | sed -E 's/^(app-)?v//'); MV=${MAC#mac-v}
+          printf '{\n  "windows": { "version": "%s", "tag": "%s" },\n  "mac": { "version": "%s", "tag": "%s" }\n}\n' "$WV" "$WIN" "$MV" "$MAC" > latest.json
+          cat latest.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- latest.json; then
+            git add latest.json
+            git commit -q -m "latest.json: Windows $WV, Mac $MV"
+            git push
+          fi

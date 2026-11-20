@@ -1,0 +1,4 @@
+{
+  "windows": { "version": "1.0.0", "tag": "app-v1.0.0" },
+  "mac": { "version": "1.0.0", "tag": "mac-v1.0.0" }
+}
