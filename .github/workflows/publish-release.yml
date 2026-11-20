@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Publish the uploaded installer as a release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -24,6 +26,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           CHANGED=0
+
+          # ---------- maintenance: upload/retag.txt lines "<tag> <commit>" move release tags (then the file is removed)
+          if [ -f upload/retag.txt ]; then
+            while read -r T C; do
+              [ -n "$T" ] && git push -f origin "$C:refs/tags/$T" && echo "Moved $T to $C"
+            done < upload/retag.txt
+            git rm -q upload/retag.txt
+            git commit -q -m "Release tags updated"
+            CHANGED=1
+          fi
 
           # ---------- macOS: upload/mac/Lensbar.dmg + Lensbar-mac.zip + version.txt -> release mac-v<version>
           # (never marked "latest", so the Windows download link keeps pointing at the Windows installer)
