@@ -1,16 +1,24 @@
 # Lensbar
 
-**Lensbar** is a fast screen recorder and screenshot tool for Windows 10 and 11, by **Obinary**.
+**Lensbar** is a fast screen recorder and screenshot tool for Windows and Mac, by **Obinary**.
 
-Press **Ctrl+Alt+R** and the capture bar slides out from the edge of your screen.
+Press **Ctrl+Alt+R** (Windows) or **⌃⌥R** (Mac) and the capture bar slides out from the edge of your screen.
 
 ## Download
 
-**[⬇ Download Lensbar for Windows](https://github.com/obinary/lensbar/releases/latest/download/Lensbar-Setup.exe)**
+**[⬇ Download for Windows](https://github.com/obinary/lensbar/releases/latest/download/Lensbar-Setup.exe)** (Windows 10 and 11)
+
+**[⬇ Download for Mac](https://github.com/obinary/lensbar/releases/download/mac-v1.0.0/Lensbar.dmg)** (macOS 14 Sonoma or later; Apple silicon and Intel)
 
 Or browse all versions on the [Releases](https://github.com/obinary/lensbar/releases) page.
 
-Run `Lensbar-Setup.exe` and follow the steps. To remove Lensbar later, use **Windows Settings → Apps**.
+**Windows:** run `Lensbar-Setup.exe` and follow the steps. To remove Lensbar later, use **Windows Settings → Apps**.
+
+**Mac:** open `Lensbar.dmg` and drag Lensbar into **Applications**. Lensbar isn't from the App Store yet, so the first time:
+1. Open Lensbar. If macOS says it can't check it, go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway**.
+2. The first time you capture, allow **Screen & System Audio Recording** for Lensbar, then quit and reopen it.
+
+The Mac shortcut is **⌃⌥R** (Control + Option + R), and Lensbar lives in the menu bar.
 
 ## What it does
 

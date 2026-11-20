@@ -1,5 +1,6 @@
 # Publishes a Lensbar release whenever a new installer is uploaded to upload/.
-# Upload:  upload/Lensbar-Setup.exe  +  upload/version.txt (e.g. 1.0.1)  [+ upload/notes.md]
+# Windows: upload/Lensbar-Setup.exe + upload/version.txt (e.g. 1.0.1) [+ upload/notes.md]  -> app-v<version>
+# macOS:   upload/mac/Lensbar.dmg + upload/mac/Lensbar-mac.zip + upload/mac/version.txt [+ notes.md] -> mac-v<version>
 # The release is tagged app-v<version>; installed copies of Lensbar find it and update themselves.
 name: Publish release
 on:
@@ -20,7 +21,30 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if [ ! -f upload/Lensbar-Setup.exe ]; then echo "Nothing to publish."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          CHANGED=0
+
+          # ---------- macOS: upload/mac/Lensbar.dmg + Lensbar-mac.zip + version.txt -> release mac-v<version>
+          # (never marked "latest", so the Windows download link keeps pointing at the Windows installer)
+          if [ -f upload/mac/Lensbar-mac.zip ]; then
+            MVER=$(tr -d '[:space:]' < upload/mac/version.txt)
+            MTAG="mac-v$MVER"
+            if [ -f upload/mac/notes.md ]; then MNOTES=$(cat upload/mac/notes.md); else MNOTES="Lensbar $MVER for macOS"; fi
+            if gh release view "$MTAG" >/dev/null 2>&1; then
+              gh release upload "$MTAG" upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip --clobber
+            else
+              gh release create "$MTAG" upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip --title "Lensbar $MVER for macOS" --notes "$MNOTES" --latest=false
+            fi
+            git rm -q upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip
+            git commit -q -m "Published $MTAG (files moved to the release)"
+            CHANGED=1
+          fi
+
+          if [ ! -f upload/Lensbar-Setup.exe ]; then
+            if [ "$CHANGED" = 1 ]; then git push; fi
+            echo "No Windows installer to publish."; exit 0
+          fi
           VER=$(tr -d '[:space:]' < upload/version.txt)
           TAG="app-v$VER"
           if [ -f upload/notes.md ]; then NOTES=$(cat upload/notes.md); else NOTES="Lensbar $VER"; fi
@@ -32,6 +56,5 @@ jobs:
           fi
           # the installer now lives on the release; take it out of the repository
           git rm -q upload/Lensbar-Setup.exe
-          git -c user.name="github-actions[bot]" -c user.email="41898283+github-actions[bot]@users.noreply.github.com" \
-              commit -m "Published $TAG (installer moved to the release)"
+          git commit -q -m "Published $TAG (installer moved to the release)"
           git push
