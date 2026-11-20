@@ -1,4 +1,4 @@
-First release of **Lensbar** (formerly Brink).
+Lensbar 1.0.1
 
-- Installing it replaces Brink and keeps your settings, shortcut and Start with Windows choice.
-- From now on Lensbar updates itself from this page.
+- Checking for updates works reliably now, even when GitHub limits update checks from your network.
+- Clearer messages if an update check fails.
