@@ -1,5 +1,6 @@
 # Publishes a Lensbar release whenever a new installer is uploaded to upload/.
 # Windows: upload/Lensbar-Setup.exe + upload/version.txt (e.g. 1.0.1) [+ upload/notes.md]  -> app-v<version>
+# Browser: upload/ext/lensbar-*.zip + upload/ext/version.txt [+ notes.md] -> ext-v<version>
 # macOS:   upload/mac/Lensbar.dmg + upload/mac/Lensbar-mac.zip + upload/mac/version.txt [+ notes.md] -> mac-v<version>
 # The release is tagged app-v<version>; installed copies of Lensbar find it and update themselves.
 name: Publish release
@@ -50,6 +51,21 @@ jobs:
             fi
             git rm -q upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip
             git commit -q -m "Published $MTAG (files moved to the release)"
+            CHANGED=1
+          fi
+
+          # ---------- browser extension: upload/ext/*.zip + version.txt -> release ext-v<version> (never "latest")
+          if ls upload/ext/*.zip >/dev/null 2>&1; then
+            EVER=$(tr -d '[:space:]' < upload/ext/version.txt)
+            ETAG="ext-v$EVER"
+            if [ -f upload/ext/notes.md ]; then ENOTES=$(cat upload/ext/notes.md); else ENOTES="Lensbar for browsers $EVER"; fi
+            if gh release view "$ETAG" >/dev/null 2>&1; then
+              gh release upload "$ETAG" upload/ext/*.zip --clobber
+            else
+              gh release create "$ETAG" upload/ext/*.zip --title "Lensbar for browsers $EVER" --notes "$ENOTES" --latest=false
+            fi
+            git rm -q upload/ext/*.zip
+            git commit -q -m "Published $ETAG (files moved to the release)"
             CHANGED=1
           fi
 

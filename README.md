@@ -20,6 +20,14 @@ Older versions are on the [Releases](https://github.com/obinary/lensbar/releases
 
 The Mac shortcut is **⌃⌥R** (Control + Option + R), and Lensbar lives in the menu bar.
 
+## Browser extension
+
+**Lensbar for browsers** brings the capture bar into Chrome, Edge, Opera, Brave and Firefox:
+- **Screenshots:** the visible part, a selected area, or the **whole page from top to bottom**.
+- **Recordings:** a tab, an area of it, or any screen or window, with tab sound and microphone.
+
+Store links will appear here once it's approved in each store. Meanwhile the packages are on the [browser extension release](https://github.com/obinary/lensbar/releases/tag/ext-v1.0.0). Privacy: [PRIVACY.md](PRIVACY.md).
+
 ## What it does
 
 - **Record or screenshot**, using one of five modes: fixed size, select an area, draw any shape, full screen, or a single window.
