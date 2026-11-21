@@ -1,3 +1,3 @@
-Lensbar 1.0.1 for macOS
+Lensbar 1.0.2 for macOS
 
-- Checking for updates works reliably now, even when GitHub limits update checks from your network.
+- New: Get the browser extension, from Settings and the menu bar menu.
