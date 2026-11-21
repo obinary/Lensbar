@@ -1,3 +1,3 @@
-Lensbar 1.0.2
+Lensbar 0.1
 
-- New: Get the browser extension, from Settings › About and the tray menu.
+New look for the shortcut box in Settings.
