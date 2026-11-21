@@ -26,7 +26,7 @@ The Mac shortcut is **⌃⌥R** (Control + Option + R), and Lensbar lives in the
 - **Screenshots:** the visible part, a selected area, or the **whole page from top to bottom**.
 - **Recordings:** a tab, an area of it, or any screen or window, with tab sound and microphone.
 
-Store links will appear here once it's approved in each store. Meanwhile the packages are on the [browser extension release](https://github.com/obinary/lensbar/releases/tag/ext-v1.0.0). Privacy: [PRIVACY.md](PRIVACY.md).
+Store links will appear here once it's approved in each store. Meanwhile the packages are on the [browser extension release](https://github.com/obinary/lensbar/releases/tag/ext-v0.1). Privacy: [PRIVACY.md](PRIVACY.md).
 
 ## What it does
 

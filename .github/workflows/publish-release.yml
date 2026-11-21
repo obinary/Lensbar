@@ -3,6 +3,8 @@
 # Browser: upload/ext/lensbar-*.zip + upload/ext/version.txt [+ notes.md] -> ext-v<version>
 # macOS:   upload/mac/Lensbar.dmg + upload/mac/Lensbar-mac.zip + upload/mac/version.txt [+ notes.md] -> mac-v<version>
 # The release is tagged app-v<version>; installed copies of Lensbar find it and update themselves.
+# Versions are 0.1.<build>: titles show "0.1"; the hidden build number is only in the tag, for updates.
+# Maintenance: upload/delete.txt (one tag per line) deletes those releases and their tags.
 name: Publish release
 on:
   push:
@@ -38,16 +40,26 @@ jobs:
             CHANGED=1
           fi
 
+          # ---------- maintenance: upload/delete.txt lists release tags to delete (release + tag), then the file is removed
+          if [ -f upload/delete.txt ]; then
+            while read -r T; do
+              [ -n "$T" ] && { gh release delete "$T" --cleanup-tag -y && echo "Deleted $T" || echo "No release $T"; }
+            done < upload/delete.txt
+            git rm -q upload/delete.txt
+            git commit -q -m "Old releases removed"
+            CHANGED=1
+          fi
+
           # ---------- macOS: upload/mac/Lensbar.dmg + Lensbar-mac.zip + version.txt -> release mac-v<version>
           # (never marked "latest", so the Windows download link keeps pointing at the Windows installer)
           if [ -f upload/mac/Lensbar-mac.zip ]; then
             MVER=$(tr -d '[:space:]' < upload/mac/version.txt)
-            MTAG="mac-v$MVER"
-            if [ -f upload/mac/notes.md ]; then MNOTES=$(cat upload/mac/notes.md); else MNOTES="Lensbar $MVER for macOS"; fi
+            MTAG="mac-v$MVER"; MSHORT=$(echo "$MVER" | cut -d. -f1-2)
+            if [ -f upload/mac/notes.md ]; then MNOTES=$(cat upload/mac/notes.md); else MNOTES="Lensbar $MSHORT for macOS"; fi
             if gh release view "$MTAG" >/dev/null 2>&1; then
               gh release upload "$MTAG" upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip --clobber
             else
-              gh release create "$MTAG" upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip --title "Lensbar $MVER for macOS" --notes "$MNOTES" --latest=false
+              gh release create "$MTAG" upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip --title "Lensbar $MSHORT for macOS" --notes "$MNOTES" --latest=false
             fi
             git rm -q upload/mac/Lensbar.dmg upload/mac/Lensbar-mac.zip
             git commit -q -m "Published $MTAG (files moved to the release)"
@@ -74,13 +86,13 @@ jobs:
             echo "No Windows installer to publish."; exit 0
           fi
           VER=$(tr -d '[:space:]' < upload/version.txt)
-          TAG="app-v$VER"
-          if [ -f upload/notes.md ]; then NOTES=$(cat upload/notes.md); else NOTES="Lensbar $VER"; fi
+          TAG="app-v$VER"; SHORT=$(echo "$VER" | cut -d. -f1-2)
+          if [ -f upload/notes.md ]; then NOTES=$(cat upload/notes.md); else NOTES="Lensbar $SHORT"; fi
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "$TAG already exists - replacing its installer"
             gh release upload "$TAG" upload/Lensbar-Setup.exe --clobber
           else
-            gh release create "$TAG" upload/Lensbar-Setup.exe --title "Lensbar $VER" --notes "$NOTES" --latest
+            gh release create "$TAG" upload/Lensbar-Setup.exe --title "Lensbar $SHORT" --notes "$NOTES" --latest
           fi
           # the installer now lives on the release; take it out of the repository
           git rm -q upload/Lensbar-Setup.exe
