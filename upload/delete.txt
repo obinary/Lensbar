@@ -1,7 +1,0 @@
-app-v1.0.0
-app-v1.0.1
-app-v1.0.2
-mac-v1.0.0
-mac-v1.0.1
-mac-v1.0.2
-ext-v1.0.0
