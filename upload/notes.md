@@ -1,4 +1,3 @@
-Lensbar 1.0.1
+Lensbar 1.0.2
 
-- Checking for updates works reliably now, even when GitHub limits update checks from your network.
-- Clearer messages if an update check fails.
+- New: Get the browser extension, from Settings › About and the tray menu.
