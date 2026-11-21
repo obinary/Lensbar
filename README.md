@@ -22,7 +22,7 @@ The Mac shortcut is **⌃⌥R** (Control + Option + R), and Lensbar lives in the
 
 ## Browser extension
 
-**Lensbar for browsers** brings the capture bar into Chrome, Edge, Opera, Brave and Firefox:
+**Lensbar for browsers** puts Lensbar under a toolbar button in Chrome, Edge, Opera, Brave and Firefox:
 - **Screenshots:** the visible part, a selected area, or the **whole page from top to bottom**.
 - **Recordings:** a tab, an area of it, or any screen or window, with tab sound and microphone.
 
