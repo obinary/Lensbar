@@ -22,11 +22,15 @@ The Mac shortcut is **⌃⌥R** (Control + Option + R), and Lensbar lives in the
 
 ## Browser extension
 
-**Lensbar for browsers** puts Lensbar under a toolbar button in Chrome, Edge, Opera, Brave and Firefox:
+**Lensbar for browsers** puts Lensbar under a toolbar button in your browser:
 - **Screenshots:** the visible part, a selected area, or the **whole page from top to bottom**.
 - **Recordings:** a tab, an area of it, or the whole browser window, with tab sound and microphone.
 
-Store links will appear here once it's approved in each store. Meanwhile the packages are on the [browser extension release](https://github.com/obinary/lensbar/releases/tag/ext-v0.1). Privacy: [PRIVACY.md](PRIVACY.md).
+**[Get it on the Chrome Web Store](https://chromewebstore.google.com/detail/hoalfmjoomoaopbpkgdkeelbgphmkndb)** for Chrome, Edge, Brave, Opera, Vivaldi and other Chromium browsers
+
+**[Get it on Firefox Add-ons](https://addons.mozilla.org/firefox/addon/lensbar-screenshot-recorder/)** for Firefox (in Firefox, recording is "Record a screen or window")
+
+The stores keep the extension up to date for you. Privacy: [PRIVACY.md](PRIVACY.md).
 
 ## What it does
 
